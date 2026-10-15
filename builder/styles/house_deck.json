@@ -1,0 +1,297 @@
+{
+  "name": "House",
+  "note": "Neutral consulting default: kicker, action headline, rounded 1 pt cards, muted body, source line, page number. Geometry follows docs/research/deck-planning.md section 6.",
+  "palette": {
+    "bg": "FFFFFF",
+    "ink": "1F2937",
+    "muted": "6B7280",
+    "accent": "3B5BDB",
+    "accent2": "1F2937",
+    "line": "D1D5DB",
+    "cardFill": "FFFFFF",
+    "cardBorder": "D1D5DB",
+    "takeawayFill": "F3F4F6",
+    "inverse": "FFFFFF",
+    "series": [
+      "3B5BDB",
+      "1F2937",
+      "9CA3AF",
+      "A5B4FC",
+      "6B7280",
+      "C7D2FE"
+    ]
+  },
+  "fonts": {
+    "display": "Arial",
+    "body": "Arial",
+    "mono": "Menlo",
+    "fallback": "Arial"
+  },
+  "card": {
+    "shape": "roundRect",
+    "radiusAdj": 4000,
+    "borderPt": 1.0,
+    "borderColor": "cardBorder",
+    "fill": "cardFill",
+    "insetPt": 14,
+    "gutterPt": 30
+  },
+  "table": {
+    "headerFill": "F3F4F6",
+    "ruleColor": "D1D5DB",
+    "rowHeightPt": 22,
+    "labelColumn": {
+      "case": "none",
+      "color": "ink",
+      "bold": true
+    }
+  },
+  "chart": {
+    "legend": "bottom",
+    "gridlines": true
+  },
+  "diagrams": "shapes",
+  "diagram": {
+    "gutterPt": 18,
+    "insetPt": 6,
+    "nodeMinW": 54,
+    "nodeMaxW": 260,
+    "nodeMinH": 26,
+    "nodeMaxH": 130,
+    "maxNodeLines": 2,
+    "edgePt": 1.25,
+    "edgeColor": "muted"
+  },
+  "kicker": {
+    "pattern": "{section} | {topic}"
+  },
+  "divider": {
+    "numbered": true
+  },
+  "stat": {
+    "rule": "below"
+  },
+  "typeScale": {
+    "kicker": {
+      "size": 12,
+      "min": 11,
+      "max": 16,
+      "color": "muted"
+    },
+    "headline": {
+      "size": 28,
+      "min": 24,
+      "max": 32,
+      "color": "ink",
+      "bold": true
+    },
+    "cardHeader": {
+      "size": 17,
+      "min": 15,
+      "max": 18,
+      "color": "ink"
+    },
+    "cardSub": {
+      "size": 14,
+      "min": 12,
+      "max": 14,
+      "color": "accent"
+    },
+    "cardBody": {
+      "size": 12,
+      "min": 11,
+      "max": 14,
+      "color": "muted"
+    },
+    "statValue": {
+      "size": 44,
+      "min": 32,
+      "max": 54,
+      "color": "accent"
+    },
+    "takeaway": {
+      "size": 13,
+      "min": 11,
+      "max": 16,
+      "color": "ink"
+    },
+    "pageNumber": {
+      "size": 9,
+      "min": 8,
+      "max": 10,
+      "color": "muted"
+    },
+    "caption": {
+      "size": 8,
+      "min": 8,
+      "max": 10,
+      "color": "muted"
+    },
+    "coverTitle": {
+      "size": 36,
+      "min": 33,
+      "max": 44,
+      "color": "ink"
+    },
+    "dividerTitle": {
+      "size": 66,
+      "min": 54,
+      "max": 72,
+      "color": "ink"
+    },
+    "agendaStatement": {
+      "size": 40,
+      "min": 32,
+      "max": 40,
+      "color": "accent"
+    },
+    "diagramNode": {
+      "size": 12,
+      "min": 8,
+      "max": 16,
+      "maxLines": 2,
+      "color": "ink"
+    },
+    "diagramLabel": {
+      "size": 9,
+      "min": 8,
+      "max": 12,
+      "bold": true,
+      "caps": true,
+      "color": "muted"
+    }
+  },
+  "furniture": {
+    "kicker": {
+      "x": 60,
+      "y": 42,
+      "w": 600,
+      "h": 22
+    },
+    "headline": {
+      "x": 60,
+      "y": 66,
+      "w": 840,
+      "h": 84
+    },
+    "hairline": {
+      "x": 60,
+      "y": 156,
+      "w": 840,
+      "h": 0.75
+    },
+    "body": {
+      "x": 60,
+      "y": 180,
+      "w": 840,
+      "h": 300
+    },
+    "takeaway": {
+      "x": 60,
+      "y": 480,
+      "w": 840,
+      "h": 30
+    },
+    "source": {
+      "x": 60,
+      "y": 514,
+      "w": 600,
+      "h": 14
+    },
+    "pageNumber": {
+      "x": 866,
+      "y": 514,
+      "w": 64,
+      "h": 14,
+      "align": "right"
+    },
+    "dividerTitle": {
+      "x": 60,
+      "y": 180,
+      "w": 840,
+      "h": 150
+    },
+    "dividerSubtitle": {
+      "x": 60,
+      "y": 342,
+      "w": 720,
+      "h": 60
+    },
+    "coverWordmark": {
+      "x": 60,
+      "y": 60,
+      "w": 500,
+      "h": 32
+    },
+    "coverTitle": {
+      "x": 60,
+      "y": 320,
+      "w": 720,
+      "h": 96
+    },
+    "coverSubtitle": {
+      "x": 60,
+      "y": 424,
+      "w": 720,
+      "h": 28
+    },
+    "coverDate": {
+      "x": 60,
+      "y": 462,
+      "w": 400,
+      "h": 20
+    },
+    "agendaEyebrow": {
+      "x": 60,
+      "y": 60,
+      "w": 400,
+      "h": 20
+    },
+    "agendaStatement": {
+      "x": 60,
+      "y": 96,
+      "w": 780,
+      "h": 110
+    }
+  },
+  "backgrounds": {
+    "content": {
+      "fill": "FFFFFF"
+    },
+    "title": {
+      "fill": "1F2937",
+      "ink": "FFFFFF",
+      "muted": "D1D5DB",
+      "accent": "FFFFFF",
+      "accent2": "A5B4FC",
+      "line": "6B7280"
+    },
+    "divider": {
+      "fill": "1F2937",
+      "ink": "FFFFFF",
+      "muted": "D1D5DB",
+      "accent": "FFFFFF",
+      "accent2": "FFFFFF",
+      "line": "6B7280"
+    },
+    "agenda": {
+      "fill": "1F2937",
+      "ink": "FFFFFF",
+      "muted": "D1D5DB",
+      "accent": "A5B4FC",
+      "accent2": "FFFFFF",
+      "line": "6B7280"
+    }
+  },
+  "copy": {
+    "wordmark": "",
+    "agendaEyebrow": "Today",
+    "emptyText": "[Add content]"
+  },
+  "rules": {
+    "kicker": true,
+    "pageNumber": true,
+    "source": true,
+    "pageNumberOnTitle": false
+  }
+}

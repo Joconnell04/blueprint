@@ -1,0 +1,11 @@
+node_modules/
+dist/
+builder/__pycache__/
+*.tmp
+test/e2e/artifacts/
+builder/corpus/*.xlsx
+bundle/
+*.mcpb
+.DS_Store
+.env
+.env.*

@@ -1,0 +1,292 @@
+/*
+ * Deck-mode canvas styles (slide, furniture, divider, diagram, palette). Tokens only; see tokens.css.
+ *
+ * A slide also carries the selected style's own tokens as custom properties (deck-layout.ts slideVars):
+ * --sl-bg, --sl-ink, --sl-muted, --sl-accent, --sl-line, --sl-display, --sl-body, and one --c-<role> and
+ * --fs-<role> per piece of furniture. Every rule below falls back to the canvas's design tokens, so a
+ * plan with no style tokens looks exactly as it did.
+ */
+
+/* ---- the slide and its scroll footprint ---- */
+.canvaswrap.deckwrap { display: flex; }
+.canvaswrap.deckwrap > .canvasscale { margin: auto; } /* centred while the slide fits, still scrollable when it does not */
+.slide {
+  position: absolute; overflow: hidden;
+  background: var(--sl-bg, var(--bg1)); border: 1px solid var(--line2); border-radius: var(--r-sm);
+  box-shadow: var(--e1);
+  font-family: var(--sl-body, var(--font));
+}
+/* light: a white slide on a grey canvas is a 1.06 contrast, so the hairline carries the edge on its own */
+:root[data-theme="light"] .slide { border-color: var(--line3); }
+.slide .dots {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0.6;
+  background-image: radial-gradient(var(--line3) 1px, transparent 1.1px);
+  background-position: -0.5px -0.5px;
+}
+/* on a styled slide the grid and the band derive from its own ink, so a black format keeps them visible */
+.slide[data-bg] .dots { background-image: radial-gradient(color-mix(in srgb, var(--sl-ink, var(--fg1)) 20%, transparent) 1px, transparent 1.1px); }
+
+/*
+ * The column module (docs/research/output-quality.md, ranked change 1): the twelve module edges the drop
+ * snaps to, drawn only while a block is moving and only faintly, so they read as a hint and never as ink.
+ */
+.slide .guides { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity var(--dur-1) var(--ease-out); }
+.slide .guides.on { opacity: 1; }
+.slide .guides .gd { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--line2); }
+.slide[data-bg] .guides .gd { background: color-mix(in srgb, var(--sl-ink, var(--fg1)) 16%, transparent); }
+/* light: a hairline on a near-white slide loses a third of its weight, so the unstyled guide steps up one */
+:root[data-theme="light"] .slide:not([data-bg]) .guides .gd { background: var(--line3); }
+
+/* ---- furniture: kicker, headline, hairline, source, page number ---- */
+.slide .dk { position: absolute; pointer-events: none; }
+.slide .dk.kicker {
+  font-size: var(--fs-kicker, var(--fs-micro)); letter-spacing: var(--ls-caps); text-transform: uppercase;
+  color: var(--c-kicker, var(--sl-muted, var(--fg3)));
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.slide .dk.kicker.dim { opacity: 0.4; }
+.slide .dk.hairline { height: 1px; background: var(--sl-line, var(--line2)); }
+.slide .dk.source { font-size: var(--fs-source, var(--fs-tag)); color: var(--c-source, var(--sl-muted, var(--fg4))); }
+.slide .dk.page { font-size: var(--fs-page, var(--fs-tag)); color: var(--c-page, var(--sl-muted, var(--fg4))); text-align: right; }
+.slide .dk.headline {
+  pointer-events: auto; cursor: text; overflow: hidden;
+  padding: 0 var(--sp-1); margin-left: calc(-1 * var(--sp-1));
+  border-radius: var(--r-sm);
+  font-family: var(--sl-display, var(--font));
+  font-size: var(--fs-headline, var(--fs-5)); font-weight: 600; line-height: var(--lh-1); color: var(--c-headline, var(--sl-ink, var(--fg1)));
+  transition: background var(--dur-1) var(--ease-out);
+}
+.slide .dk.headline:hover { background: var(--hover); box-shadow: inset 0 0 0 1px var(--line2); }
+.slide .dk.headline.empty { color: var(--fg4); font-weight: 400; font-size: var(--fs-5); }
+.slide[data-bg] .dk.headline.empty { color: color-mix(in srgb, var(--sl-ink, var(--fg1)) 45%, transparent); }
+.slide textarea.dk.hledit {
+  position: absolute; pointer-events: auto; z-index: var(--z-block);
+  min-height: 0; padding: 0 var(--sp-1); resize: none;
+  font-family: var(--sl-display, var(--font));
+  font-size: var(--fs-headline, var(--fs-5)); font-weight: 600; line-height: var(--lh-1);
+}
+/* the furniture's own band, rows 1 to 4: subtly walled off, nothing drops into it */
+.slide .band {
+  position: absolute; left: 0; top: 0; right: 0; pointer-events: none;
+  background: var(--hover); border-bottom: 1px solid var(--line1);
+}
+.slide[data-bg] .band {
+  background: color-mix(in srgb, var(--sl-ink, var(--fg1)) 5%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--sl-ink, var(--fg1)) 12%, transparent);
+}
+
+/* ---- divider slide (F16): the format's section slide, its title edited in place ---- */
+.slide.divider .dk.dtitle {
+  pointer-events: auto; cursor: text; overflow: hidden;
+  display: flex; align-items: baseline; gap: var(--sp-3);
+  padding: 0 var(--sp-1); margin-left: calc(-1 * var(--sp-1)); border-radius: var(--r-sm);
+  font-family: var(--sl-display, var(--font));
+  font-size: var(--fs-dtitle, calc(var(--fs-5) * 2.2)); font-weight: 600; line-height: var(--lh-1);
+  color: var(--c-dtitle, var(--sl-ink, var(--fg1)));
+  transition: background var(--dur-1) var(--ease-out);
+}
+.slide.divider .dk.dtitle:hover { background: var(--hover); box-shadow: inset 0 0 0 1px var(--line2); }
+.slide.divider .dk.dtitle .no { flex: none; font-family: var(--mono); font-variant-numeric: tabular-nums; color: var(--sl-accent, var(--accent)); }
+.slide.divider .dk.dtitle .t { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.slide.divider input.dk.dtedit {
+  position: absolute; pointer-events: auto; z-index: var(--z-block);
+  height: auto; padding: 0 var(--sp-1);
+  font-family: var(--sl-display, var(--font));
+  font-size: var(--fs-dtitle, calc(var(--fs-5) * 2.2)); font-weight: 600; line-height: var(--lh-1);
+}
+.tabstrip button.dv { font-style: italic; }
+.tabstrip button.dv::before { content: "§"; color: var(--fg5); margin-right: var(--sp-0); font-style: normal; }
+
+/* ---- a block on the slide: a sketch, not a surface ---- */
+.blk.deck { background: var(--bg2); border-color: var(--line2); box-shadow: none; }
+.blk.deck:hover { border-color: var(--line3); }
+.blk.deck .bh { height: 18px; background: var(--sel); border-bottom-color: var(--line1); }
+.blk.deck.flat .bh { height: 100%; border-bottom: none; }
+.blk.deck.emph { border-color: var(--accent); }
+.blk.deck.emph .bh { background: var(--accent-soft); }
+.badge.emph { background: var(--accent-soft); color: var(--accent-ink); letter-spacing: var(--ls-caps); text-transform: uppercase; }
+.blk.deck .bc {
+  display: flex; flex-direction: column; gap: var(--sp-1);
+  padding: var(--sp-1); min-height: 0;
+  font-family: var(--font); font-size: var(--fs-tag); color: var(--fg3);
+}
+
+/* sketch primitives: grey lines, bullet dots, small caps */
+.blk.deck .lines { display: flex; flex-direction: column; gap: var(--sp-1); }
+.blk.deck .ln { flex: none; height: var(--sp-0); border-radius: 1px; background: var(--fg5); }
+.blk.deck .ln.big { height: var(--sp-1); background: var(--fg4); }
+.blk.deck .ln.hd { height: var(--sp-1); background: var(--fg3); }
+.blk.deck .ln.sub { background: var(--accent); opacity: 0.55; }
+.blk.deck .ln.thin { height: 1px; }
+.blk.deck .bl { display: flex; align-items: center; gap: var(--sp-1); }
+.blk.deck .bl .bd { flex: none; width: var(--sp-1); height: var(--sp-1); border-radius: 50%; background: var(--fg3); }
+.blk.deck .caps {
+  padding: 0 var(--sp-0);
+  font-size: var(--fs-tag); letter-spacing: var(--ls-caps); text-transform: uppercase; color: var(--fg3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* cards, stats */
+.blk.deck .cards { flex: 1; display: flex; gap: var(--sp-1); min-height: 0; }
+.blk.deck .ck { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--sp-1); padding: var(--sp-1); border: 1px solid var(--line2); border-radius: var(--r-sm); }
+.blk.deck .ck .bdy { display: flex; flex-direction: column; gap: var(--sp-1); margin-top: var(--sp-2); }
+.blk.deck .stats { flex: 1; display: flex; align-items: center; gap: var(--sp-2); min-height: 0; }
+.blk.deck .sv { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--sp-2); }
+.blk.deck .stats.many .num { font-size: calc(var(--fs-5) * 1.1); }
+.blk.deck .sv .num {
+  max-width: 100%; overflow: hidden; white-space: nowrap;
+  font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: calc(var(--fs-5) * 1.5); font-weight: 600;
+  line-height: var(--lh-1); color: var(--fg1);
+}
+/* the invented number: a placeholder, like the sample values on the sheet canvas */
+.blk.deck .sv .num.ph { color: var(--fg3); text-decoration: underline dotted var(--line3); text-underline-offset: 3px; }
+
+/* table grid */
+.blk.deck .tbl { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.blk.deck .tr { flex: 1; display: flex; align-items: center; min-height: 0; border-bottom: 1px solid var(--line1); }
+.blk.deck .tr.th { border-bottom-color: var(--line3); }
+.blk.deck .tr:last-child { border-bottom: none; }
+.blk.deck .tc { flex: 1; min-width: 0; padding: 0 var(--sp-1); border-right: 1px solid var(--line1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.blk.deck .tr.th .tc { color: var(--fg2); font-weight: 600; }
+.blk.deck .tc:last-child { border-right: none; }
+
+/* image frame, quote, takeaway bar, placeholder, source lines */
+.blk.deck .img { position: relative; flex: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid var(--line2); border-radius: var(--r-sm); color: var(--fg4); }
+.blk.deck .img svg { position: absolute; inset: 0; }
+.blk.deck .img .lbl { position: relative; max-width: 92%; padding: 0 var(--sp-1); border-radius: 2px; background: var(--bg2); color: var(--fg3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.blk.deck .qt { flex: 1; display: flex; align-items: center; gap: var(--sp-2); }
+.blk.deck .qt .qm { flex: none; font-size: calc(var(--fs-5) * 2); font-weight: 600; line-height: 0.55; color: var(--fg4); }
+.blk.deck .qt .lines { flex: 1; min-width: 0; gap: var(--sp-2); }
+.blk.deck .bar { flex: 1; display: flex; align-items: center; padding: 0 var(--sp-2); border-radius: var(--r-sm); background: var(--accent-soft); color: var(--accent-ink); }
+.blk.deck.placeholder { background: transparent; }
+/* the dashed box is the placeholder block's own body; `.ph` on anything else means a guessed value */
+.blk.deck.placeholder .ph { flex: 1; display: flex; align-items: center; justify-content: center; padding: 0 var(--sp-1); border: 1px dashed var(--line3); border-radius: var(--r-sm); color: var(--fg4); font-style: italic; text-align: center; }
+.blk.deck .src { display: flex; flex-direction: column; gap: var(--sp-1); padding-top: var(--sp-0); }
+
+/*
+ * A sketch on a styled slide takes its greys from the slide's own ink, so a black format and a white one
+ * both stay legible. Everything here is derived from --sl-ink, --sl-bg and --sl-accent: no new colours.
+ */
+.slide[data-bg] .blk.deck { background: color-mix(in srgb, var(--sl-ink) 7%, var(--sl-bg)); border-color: color-mix(in srgb, var(--sl-ink) 22%, transparent); }
+.slide[data-bg] .blk.deck:hover { border-color: color-mix(in srgb, var(--sl-ink) 34%, transparent); }
+.slide[data-bg] .blk.deck .bh { background: color-mix(in srgb, var(--sl-ink) 8%, transparent); border-bottom-color: color-mix(in srgb, var(--sl-ink) 16%, transparent); }
+.slide[data-bg] .blk.deck .bh .t, .slide[data-bg] .blk.deck .bc { color: color-mix(in srgb, var(--sl-ink) 62%, transparent); }
+.slide[data-bg] .blk.deck .ln { background: color-mix(in srgb, var(--sl-ink) 26%, transparent); }
+.slide[data-bg] .blk.deck .ln.big, .slide[data-bg] .blk.deck .ln.hd, .slide[data-bg] .blk.deck .bl .bd { background: color-mix(in srgb, var(--sl-ink) 42%, transparent); }
+.slide[data-bg] .blk.deck .ln.sub { background: var(--sl-accent, var(--accent)); }
+.slide[data-bg] .blk.deck .ck, .slide[data-bg] .blk.deck .img { border-color: color-mix(in srgb, var(--sl-ink) 22%, transparent); }
+.slide[data-bg] .blk.deck .sv .num { color: color-mix(in srgb, var(--sl-ink) 72%, transparent); }
+.slide[data-bg] .blk.deck .sv .num.ph { text-decoration-color: color-mix(in srgb, var(--sl-ink) 34%, transparent); }
+.slide[data-bg] .blk.deck .tr { border-bottom-color: color-mix(in srgb, var(--sl-ink) 14%, transparent); }
+.slide[data-bg] .blk.deck .tr.th { border-bottom-color: color-mix(in srgb, var(--sl-ink) 34%, transparent); }
+.slide[data-bg] .blk.deck .tc { border-right-color: color-mix(in srgb, var(--sl-ink) 12%, transparent); }
+.slide[data-bg] .blk.deck .bar { background: color-mix(in srgb, var(--sl-accent, var(--accent)) 20%, transparent); color: var(--sl-accent, var(--accent-ink)); }
+.slide[data-bg] .blk.deck .caps, .slide[data-bg] .blk.deck .img .lbl { color: color-mix(in srgb, var(--sl-ink) 55%, transparent); }
+.slide[data-bg] .blk.deck .img .lbl { background: color-mix(in srgb, var(--sl-ink) 7%, var(--sl-bg)); }
+.slide[data-bg] .blk.deck.placeholder .ph { border-color: color-mix(in srgb, var(--sl-ink) 30%, transparent); color: color-mix(in srgb, var(--sl-ink) 55%, transparent); }
+.slide[data-bg] .blk.deck .dg .nd rect { fill: color-mix(in srgb, var(--sl-ink) 10%, var(--sl-bg)); stroke: color-mix(in srgb, var(--sl-ink) 30%, transparent); }
+.slide[data-bg] .blk.deck .dg .nd rect.ph { fill: color-mix(in srgb, var(--sl-ink) 30%, transparent); }
+.slide[data-bg] .blk.deck .dg text.lb { fill: color-mix(in srgb, var(--sl-ink) 75%, transparent); }
+.slide[data-bg] .blk.deck .dg text.el { fill: color-mix(in srgb, var(--sl-ink) 55%, transparent); }
+.slide[data-bg] .blk.deck .dg .ar, .slide[data-bg] .blk.deck .dg .ax { stroke: color-mix(in srgb, var(--sl-ink) 45%, transparent); }
+.slide[data-bg] .blk.deck .dg .hd { fill: color-mix(in srgb, var(--sl-ink) 45%, transparent); }
+.slide[data-bg] .blk.deck .dg .tick { fill: var(--sl-accent, var(--accent)); }
+/* a chart sketch on a styled slide plots in the format's accent, not the canvas's own chart colour */
+.slide[data-bg] .blk.deck svg.chart rect, .slide[data-bg] .blk.deck svg.chart path, .slide[data-bg] .blk.deck svg.chart circle { fill: var(--sl-accent, var(--chart)); }
+.slide[data-bg] .blk.deck svg.chart polyline { stroke: var(--sl-accent, var(--chart)); }
+
+/* diagram sketch (F18): small rounded boxes and thin arrows, never a rendered diagram */
+.blk.deck .dg { display: block; width: 100%; height: 100%; overflow: visible; }
+.blk.deck .dg .nd rect { fill: var(--bg3); stroke: var(--line3); stroke-width: 1; }
+.blk.deck .dg .nd rect.ph { fill: var(--fg5); stroke: none; }
+.blk.deck .dg text { font-family: var(--font); font-size: var(--fs-tag); dominant-baseline: middle; text-anchor: middle; }
+.blk.deck .dg text.lb { fill: var(--fg2); }
+.blk.deck .dg text.el { fill: var(--fg4); }
+.blk.deck .dg text.el.side { text-anchor: start; }   /* a label beside a vertical arrow, not across it */
+.blk.deck .dg .ar { stroke: var(--fg4); stroke-width: 1; }
+.blk.deck .dg .ax { stroke: var(--line3); stroke-width: 1; }
+.blk.deck .dg .hd { fill: var(--fg4); }
+.blk.deck .dg .tick { fill: var(--accent); }
+.blk.deck.diagram.sel .dg .nd rect { stroke: var(--accent); }
+.side .field .w-dir { width: 72px; flex: none; }
+.side .field textarea.edges { min-height: 68px; font-family: var(--mono); font-size: var(--fs-2); }
+
+/* type tags the workbook list does not carry */
+.ty.cards, .ty.stat { color: var(--accent); }
+.ty.diagram { color: var(--chart); }
+.ty.image { color: var(--chart); }
+.ty.takeaway { color: var(--ok); }
+.ty.placeholder { color: var(--warn); }
+.ty.quote, .ty.headline, .ty.bullets { color: var(--fg2); }
+.ty.kicker, .ty.notes { color: var(--fg4); }
+.minimap rect.mb.cards, .minimap rect.mb.stat { fill: var(--accent); opacity: 0.55; }
+.minimap rect.mb.image, .minimap rect.mb.diagram { fill: var(--chart); opacity: 0.55; }
+.minimap rect.mb.takeaway { fill: var(--ok); opacity: 0.55; }
+.minimap rect.mb.placeholder { fill: var(--warn); opacity: 0.5; }
+
+/* ---- toolbar: the archetype chip next to Remix, then Fit, Balance and the Snap toggle ---- */
+.toolbar button.archchip { height: 20px; padding: 0 var(--sp-2); border-radius: 999px; background: transparent; color: var(--fg3); font-size: var(--fs-1); }
+.toolbar button.archchip:hover { background: var(--hover); border-color: var(--line3); color: var(--fg1); }
+/* the toggle reads as pressed, not as a second action: the wash the toolbar already uses for `on` */
+.toolbar button.snapbtn { padding: 0 var(--sp-2); color: var(--fg4); }
+.toolbar button.snapbtn.on { background: var(--sel); color: var(--fg1); }
+
+/* ---- both canvases: four corner grips (F19) ----
+ * styles.css puts `.rs` at the bottom right; these three move the others and turn the arrow. The grips
+ * other than the south-east one stay invisible until the block is hovered or selected, so a block at rest
+ * is still a clean sketch.
+ */
+.blk .rs.nw { right: auto; bottom: auto; left: 0; top: 0; cursor: nwse-resize; }
+.blk .rs.ne { left: auto; bottom: auto; right: 0; top: 0; cursor: nesw-resize; }
+.blk .rs.sw { right: auto; top: auto; left: 0; bottom: 0; cursor: nesw-resize; }
+.blk .rs.nw::after { right: auto; bottom: auto; left: 2px; top: 2px; border: none; border-left: 1.5px solid var(--fg5); border-top: 1.5px solid var(--fg5); border-radius: 2px 0 0 0; }
+.blk .rs.ne::after { left: auto; bottom: auto; right: 2px; top: 2px; border: none; border-right: 1.5px solid var(--fg5); border-top: 1.5px solid var(--fg5); border-radius: 0 2px 0 0; }
+.blk .rs.sw::after { right: auto; top: auto; left: 2px; bottom: 2px; border: none; border-left: 1.5px solid var(--fg5); border-bottom: 1.5px solid var(--fg5); border-radius: 0 0 0 2px; }
+.blk .rs.nw::after, .blk .rs.ne::after, .blk .rs.sw::after { opacity: 0; transition: opacity var(--dur-1) var(--ease-out); }
+.blk:hover .rs::after, .blk.sel .rs::after { opacity: 1; }
+
+/* ---- side panel: compact sections, the story, the blocks list and the readiness lines ---- */
+.side .scroll.compact { gap: var(--sp-3); }
+.side .storywrap { position: relative; }
+.side .story { font-size: var(--fs-2); color: var(--fg3); line-height: var(--lh-2); }
+.side .story.clamp { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.side .storywrap button.more { position: absolute; right: 0; bottom: 0; height: 14px; padding: 0 var(--sp-1); border: none; border-radius: 2px; background: var(--bg1); color: var(--fg4); font-size: var(--fs-1); }
+.side .storywrap button.more:hover { color: var(--fg1); }
+.blocklist .b.sel { background: var(--sel); }
+/* the grip stays in the row's layout so hovering it does not shuffle the title, as the outline rows do */
+.blocklist .b .acts { display: flex; visibility: hidden; align-items: center; gap: var(--sp-0); margin-left: auto; }
+.blocklist .b:hover .acts, .blocklist .b.sel .acts { visibility: visible; }
+.blocklist .b .acts button { height: 18px; padding: 0 var(--sp-1); border: none; background: transparent; color: var(--fg4); font-size: var(--fs-1); }
+.blocklist .b .acts button:hover { background: var(--hover); color: var(--fg1); }
+.blocklist .b .acts button.confirm { color: var(--bad); background: var(--bad-soft); }
+.warnlist li .m { flex: 1; min-width: 0; }
+.warnlist li button.chev { flex: none; width: 16px; height: 16px; padding: 0; border: none; background: transparent; color: var(--fg4); }
+.warnlist li button.chev:hover { color: var(--fg1); }
+.warnlist li.open button.chev svg { transform: rotate(180deg); }
+/* a slide-level note read from a block's thread: its marker says where it lives */
+.notes.onslide .note { cursor: pointer; }
+.notes.onslide .note .st { color: var(--accent-ink); }
+
+/* ---- workbook canvas: placeholder values and the header size step ----
+ * Two families that belong in styles.css; app-design owns that file, so they live here until it takes
+ * them. deck.css is imported before styles.css's own rules, hence the doubled class on the value cells:
+ * .v and .f would otherwise win the colour on equal specificity.
+ */
+/* a value the app or Claude invented: muted and dotted, so it never reads as data */
+.blk .bc .r > div.ph, .blk .bc .r > div.ph:first-child, .blk .bc .r > div.v.ph, .blk .bc .r > div.f.ph {
+  color: var(--fg4);
+  text-decoration: underline dotted var(--line3);
+  text-underline-offset: 2px;
+}
+/* a block narrower than its headers: one step down the type scale before anything truncates */
+.blk .bc.tight .r.h > div { font-size: var(--fs-tag); }
+
+/* ---- palette and archetype popovers ---- */
+.pop.deckpal { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; min-width: 240px; }
+.pop.deckpal > button { height: 28px; }
+.pop.deckpal .ty { width: auto; }
+.pop.archlist { min-width: 230px; max-height: 300px; overflow-y: auto; }
+.pop.archlist > button { justify-content: flex-start; }
+.pop.archlist > button.on { background: var(--sel); }
+.pop.archlist .t { font-size: var(--fs-2); }
+.pop.archlist .n { margin-left: auto; font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: var(--fs-1); color: var(--fg4); }

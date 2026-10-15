@@ -1,0 +1,296 @@
+{
+  "name": "Referral Growth Review",
+  "outputPath": "builder/sample_deck.pptx",
+  "exportPdf": false,
+  "style": {"mode": "house"},
+  "slideSize": {"w": 960, "h": 540},
+  "grid": {"cols": 32, "rows": 18, "cell": 30},
+  "brief": {
+    "audience": "Partnership leadership team",
+    "goal": "Agree the two referral moves we fund next",
+    "takeaway": "Referrals stall at the ask, not at the relationship",
+    "emphasis": ["conversion gap", "the ask moment"]
+  },
+  "slides": [
+    {
+      "id": "s_cover",
+      "kind": "title",
+      "name": "Cover",
+      "story": "Sets the room: this is a working review of referral growth, not a status update.",
+      "headline": "Growing partnerships through referrals",
+      "subtitle": "Partnership growth review",
+      "date": "Draft for discussion",
+      "blocks": []
+    },
+    {
+      "id": "s_agenda",
+      "kind": "agenda",
+      "name": "Agenda",
+      "story": "Frames the session in one sentence and names the four stops so nobody waits for their topic.",
+      "headline": "We agree where referral growth comes from and what we change next",
+      "message": "Four stops, one decision at the end",
+      "blocks": [
+        {
+          "id": "b_agenda",
+          "type": "bullets",
+          "role": "list",
+          "col": 2, "row": 9, "cols": 28, "rows": 8,
+          "content": {
+            "items": [
+              {"text": "Why referrals: the conversion gap we are leaving on the table"},
+              {"text": "Where they stall: three moments, each with a different fix"},
+              {"text": "What the data says: two channels carry the volume"},
+              {"text": "What we decide: two moves, one owner each"}
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "s_stall",
+      "name": "Where referrals stall",
+      "section": "Why referrals",
+      "story": "Names the three failure modes so the room stops arguing about whether partners care.",
+      "message": "Partners do not forget to refer; the ask never happens",
+      "kicker": "Strategic Rationale | Why Referrals",
+      "headline": "Referrals stall at three moments, and each one has a different fix",
+      "notes": "Ask the room which of the three they recognise before showing the takeaway bar.",
+      "blocks": [
+        {
+          "id": "b_stall_cards",
+          "type": "cards",
+          "role": "card",
+          "col": 3, "row": 7, "cols": 28, "rows": 8,
+          "emphasis": true,
+          "content": {
+            "items": [
+              {
+                "header": "No moment",
+                "sub": "Timing",
+                "body": "Partners meet the right person weeks before they think of us. Nothing in the meeting flow prompts an introduction, so the moment goes by."
+              },
+              {
+                "header": "No words",
+                "sub": "Language",
+                "body": "When the moment comes, partners describe us in their own words. The introduction lands flat and the other side cannot tell why it matters."
+              },
+              {
+                "header": "No follow",
+                "sub": "Hand-off",
+                "body": "Introductions arrive in a partner inbox and sit there. Nobody owns the first reply, so a warm lead cools to the temperature of a cold one."
+              }
+            ]
+          }
+        },
+        {
+          "id": "b_stall_take",
+          "type": "takeaway",
+          "role": "statement",
+          "col": 3, "row": 16, "cols": 28, "rows": 2,
+          "content": {"text": "Fix the ask, not the relationship: a scripted moment beats another reminder email"}
+        }
+      ]
+    },
+    {
+      "id": "s_prize",
+      "name": "The prize",
+      "section": "Why referrals",
+      "story": "Sizes the opportunity with three numbers the team already trusts, so the fix is worth funding.",
+      "message": "A warm introduction is worth four cold ones",
+      "kicker": "Objective | The Prize",
+      "headline": "A warm introduction converts four times better than a cold list",
+      "source": "Partner CRM, 2,400 introductions",
+      "blocks": [
+        {
+          "id": "b_prize_stats",
+          "type": "stat",
+          "role": "stat",
+          "col": 2, "row": 7, "cols": 30, "rows": 5,
+          "content": {
+            "items": [
+              {"value": "4.1x", "label": "Conversion versus a cold list"},
+              {"value": "38%", "label": "Of new partners came from a referral"},
+              {"value": "11 days", "label": "Shorter from first contact to signed"}
+            ]
+          }
+        },
+        {
+          "id": "b_prize_text",
+          "type": "text",
+          "role": "text",
+          "col": 3, "row": 13, "cols": 28, "rows": 4,
+          "content": {
+            "paragraphs": [
+              "The gap is not interest. Partners who refer once refer again within the quarter, and their introductions close faster than outbound leads.",
+              "Every point of referral share we win is a point we stop buying."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "s_ask",
+      "name": "The ask moment",
+      "section": "Why referrals",
+      "story": "Shows the scripted moment as a table the team can adopt on Monday, beside the four conditions that make it work.",
+      "message": "Script the moment and name the owner",
+      "kicker": "Solution | The Ask Moment",
+      "headline": "Partners ask when the moment is scripted, not when reminded",
+      "blocks": [
+        {
+          "id": "b_ask_list",
+          "type": "bullets",
+          "role": "list",
+          "col": 3, "row": 7, "cols": 12, "rows": 10,
+          "content": {
+            "items": [
+              {"text": "One moment per partner journey, not a campaign"},
+              {"text": "Words the partner already uses, written down"},
+              {"text": "A named owner for the first reply", "children": [
+                {"text": "Same day, same person"}
+              ]},
+              {"text": "One follow-up, then stop"}
+            ]
+          }
+        },
+        {
+          "id": "b_ask_table",
+          "type": "table",
+          "role": "table",
+          "col": 17, "row": 7, "cols": 14, "rows": 10,
+          "content": {
+            "headers": ["Moment", "Owner", "Prompt"],
+            "rows": [
+              ["Kickoff call", "Partner lead", "Who else should hear this"],
+              ["First win", "Account lead", "Name one peer"],
+              ["Quarterly review", "Partner lead", "Two introductions"],
+              ["Renewal", "Account lead", "Warm hand-off"]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "s_divider",
+      "kind": "divider",
+      "name": "Next section",
+      "section": "What we do next",
+      "story": "A breath before the decision.",
+      "headline": "What we do next",
+      "subtitle": "Three moves, one owner each.",
+      "blocks": []
+    },
+    {
+      "id": "s_channels",
+      "name": "Where growth comes from",
+      "section": "What we do next",
+      "story": "Puts the channel mix on screen so the funding argument is about two channels, not six.",
+      "message": "Two channels carry the volume",
+      "kicker": "Evidence | Where Growth Comes From",
+      "headline": "Two channels drive nine of every ten introductions",
+      "source": "Partner CRM",
+      "blocks": [
+        {
+          "id": "b_chan_chart",
+          "type": "chart",
+          "role": "visual",
+          "col": 3, "row": 7, "cols": 18, "rows": 10,
+          "content": {
+            "kind": "column",
+            "categories": ["Events", "Existing partners", "Advisors", "Inbound"],
+            "series": [
+              {"name": "Last year", "values": [22, 61, 12, 9]},
+              {"name": "This year", "values": [18, 84, 14, 7]}
+            ]
+          }
+        },
+        {
+          "id": "b_chan_insight",
+          "type": "text",
+          "role": "text",
+          "col": 23, "row": 7, "cols": 8, "rows": 10,
+          "emphasis": true,
+          "content": {
+            "paragraphs": [
+              "Existing partners grew 38% this year while events fell.",
+              "Advisors are small but convert at twice the rate.",
+              "Fund the two that compound; stop staffing the rest."
+            ]
+          }
+        },
+        {
+          "id": "b_chan_notes",
+          "type": "notes",
+          "col": 3, "row": 18, "cols": 28, "rows": 1,
+          "content": {"text": "If asked about events: the drop is deliberate, we cut two sponsorships."}
+        }
+      ]
+    },
+    {
+      "id": "s_flow",
+      "name": "The referral flow",
+      "section": "What we do next",
+      "story": "Shows the scripted ask as one diagram, so the room can see where the owner changes.",
+      "message": "Four steps, one owner each",
+      "headline": "four steps turn a warm moment into a signed referral",
+      "blocks": [
+        {
+          "id": "b_flow_diagram",
+          "type": "diagram",
+          "role": "visual",
+          "col": 3, "row": 7, "cols": 28, "rows": 7,
+          "content": {
+            "kind": "flow",
+            "direction": "LR",
+            "nodes": [
+              {"id": "spot", "label": "Spot the moment"},
+              {"id": "ask", "label": "Script the ask"},
+              {"id": "hand", "label": "Hand off warm"},
+              {"id": "reply", "label": "Reply same day"}
+            ],
+            "edges": [
+              {"from": "spot", "to": "ask", "label": "prompts"},
+              {"from": "ask", "to": "hand", "label": "names"},
+              {"from": "hand", "to": "reply", "label": "owns"}
+            ]
+          }
+        },
+        {
+          "id": "b_flow_take",
+          "type": "takeaway",
+          "role": "statement",
+          "col": 3, "row": 15, "cols": 28, "rows": 2,
+          "content": {"text": "The owner changes at the hand-off, which is where referrals go cold"}
+        }
+      ]
+    },
+    {
+      "id": "s_close",
+      "name": "The ask",
+      "section": "What we do next",
+      "story": "Closes on the decision: pick two moves, name owners, leave with a date-free commitment.",
+      "message": "Pick two moves and name the owners",
+      "kicker": "Close | The Ask",
+      "headline": "Pick the two moves we fund this quarter and name an owner for each",
+      "blocks": [
+        {
+          "id": "b_close_quote",
+          "type": "quote",
+          "role": "quote",
+          "col": 4, "row": 7, "cols": 26, "rows": 5,
+          "content": {
+            "text": "We never stopped wanting to refer you. Nobody ever asked us at a moment when it was easy.",
+            "attribution": "Partner interview, regional network"
+          }
+        },
+        {
+          "id": "b_close_next",
+          "type": "placeholder",
+          "role": "visual",
+          "col": 4, "row": 13, "cols": 26, "rows": 4,
+          "content": {"label": "Designed next-steps strip: Decide, Fund, Assign, Review"}
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+/*
+ * Layer 3 for a deck: the slide strip, the large vector slide and the snapshot preview itself, plus the
+ * sheet/slide list both built views share. Tokens only; see tokens.css and docs/design-system.md.
+ *
+ * The `.side .rows` prefix is here to outrank the plain `.sheetrow` rules in styles.css (app-design owns
+ * that file): the row carried the negative margin twice, once from `.rows` and once from itself, so its
+ * last column hung past the panel's gutter and the formulas count was clipped by the panel edge.
+ */
+
+/* ---- the sheet/slide list: a grid, so the last column keeps the gutter and stays right aligned ---- */
+.side .rows .sheetrow {
+  display: grid; grid-template-columns: 1fr 54px 34px; align-items: center;
+  column-gap: var(--sp-2); margin: 0;
+}
+.side .rows .sheetrow.deck { grid-template-columns: 18px 1fr 54px 26px; }
+.side .rows .sheetrow .n, .side .rows .sheetrow .n + .n { width: auto; text-align: right; }
+.side .rows .sheetrow .n.warn { color: var(--warn); }
+.side .rows .sheetrow .ix { font-size: var(--fs-1); color: var(--fg4); text-align: right; }
+.side .rows .sheetrow.sel { background: var(--sel); }
+.side .rows .sheetrow.sel .ix { color: var(--fg2); }
+
+/* ---- slide strip: one vector thumbnail per slide, the current one ringed ---- */
+.slidestrip {
+  display: flex; align-items: center; gap: var(--sp-1); flex: none;
+  padding: var(--sp-2); background: var(--bg1); border-bottom: 1px solid var(--line1);
+  overflow-x: auto; scrollbar-width: none;
+}
+.slidestrip::-webkit-scrollbar { display: none; }
+/* the index and any finding dot sit in a caption band above the slide, never over its headline */
+.slidestrip .sl {
+  position: relative; display: block; flex: none; width: 96px; height: 65px; padding: 11px 0 0; overflow: hidden;
+  background: var(--bg2); border: 1px solid var(--line2); border-radius: var(--r-sm);
+}
+.slidestrip .sl:hover { background: var(--bg2); border-color: var(--line3); }
+.slidestrip .sl.on { border-color: transparent; box-shadow: 0 0 0 1.5px var(--accent); }
+.slidestrip .sl .ix {
+  position: absolute; left: var(--sp-1); top: 0;
+  font-size: var(--fs-tag); line-height: 11px; color: var(--fg4);
+}
+.slidestrip .sl.on .ix { color: var(--accent-ink); }
+.slidestrip .sl .dot { position: absolute; right: var(--sp-1); top: 3px; }
+.slidestrip .sl .sprev { height: 54px; }
+
+/* ---- the slide under the strip: as large as fits, never distorted ---- */
+.pane { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.canvaswrap.sstage { display: grid; place-items: center; padding: var(--sp-3); overflow: hidden; container-type: size; }
+.sslide {
+  max-width: 100%; max-height: 100%; overflow: hidden;
+  background: var(--bg1); border: 1px solid var(--line2); border-radius: var(--r-sm); box-shadow: var(--e1);
+}
+.sprev { display: block; width: 100%; height: 100%; }
+
+/* ---- the snapshot preview: a box per drawn shape, the text at slide scale ---- */
+.sprev .bg { fill: var(--bg1); }
+.sprev.k-title .bg { fill: var(--bg2); }
+.sprev.k-divider .bg { fill: var(--accent-soft); }
+.sprev .shp { fill: var(--bg2); stroke: var(--line1); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.sprev .shp.k-card { fill: var(--bg3); stroke: var(--line2); }
+.sprev .shp.k-table { fill: var(--bg2); stroke: var(--line2); }
+.sprev .shp.k-chart { fill: var(--chart-soft); stroke: var(--chart); stroke-dasharray: 5 4; }
+.sprev .shp.k-image, .sprev .shp.k-placeholder { fill: none; stroke: var(--line3); stroke-dasharray: 5 4; }
+.sprev .shp.k-stat, .sprev .shp.k-text, .sprev .shp.k-quote { fill: none; stroke: var(--line1); }
+.sprev .shp.k-takeaway { fill: var(--accent-soft); stroke: none; }
+/* diagram: a node is a card; an edge records only the connector's bounding box, so it is a hint, not a box */
+.sprev .shp.k-node { fill: var(--bg3); stroke: var(--line2); }
+.sprev .shp.k-edge { fill: none; stroke: var(--line2); stroke-dasharray: 2 3; }
+.sprev .shp.rule { fill: var(--line2); stroke: none; }
+/* a 5 px dash is a third of a thumbnail's chart box, so shorten it there */
+.sprev.thumb .shp.k-chart, .sprev.thumb .shp.k-image, .sprev.thumb .shp.k-placeholder { stroke-dasharray: 2 2; }
+.sprev .tx { fill: var(--fg2); font-family: var(--font); }
+.sprev .tx.hl { fill: var(--fg1); font-weight: 600; }
+.sprev .tx.kick { fill: var(--fg4); letter-spacing: var(--ls-caps); }
+.sprev .tx.val { fill: var(--value); font-family: var(--mono); font-weight: 600; }
+.sprev .tx.page { fill: var(--fg5); font-family: var(--mono); }
+.sprev.k-divider .tx.hl { fill: var(--accent-ink); }
+.sprev .tag { fill: var(--fg5); font-family: var(--font); font-weight: 600; letter-spacing: var(--ls-caps); }
+
+/* a plan block's hit rectangle: the deck's .sblk */
+.sprev .svblk { fill: transparent; stroke: transparent; stroke-width: 1.5; vector-effect: non-scaling-stroke; pointer-events: all; cursor: pointer; }
+.sprev .svblk:hover { fill: var(--accent-soft); stroke: var(--accent); }
+.sprev .svblk.diff { stroke: var(--warn); }
+/* the builder moved this one: a dashed outline, and the warn colour when it is off the plan as well */
+.sprev .svblk.adj { stroke: var(--fg4); stroke-dasharray: 5 4; }
+.sprev .svblk.diff.adj { stroke: var(--warn); }
+.sprev .svblk.mark { stroke: var(--bad); stroke-width: 2; fill: var(--bad-soft); stroke-dasharray: none; }
+
+/* ---- the adjusted chip and its list ---- */
+.toolbar button.chip.adjchip { color: var(--fg3); }
+.toolbar button.chip.adjchip:hover { border-color: var(--line3); color: var(--fg1); }
+.pop.adjlist { min-width: 380px; max-width: 460px; max-height: 320px; overflow-y: auto; padding-bottom: var(--sp-1); }
+.pop.adjlist > button.arow {
+  display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; gap: var(--sp-1) var(--sp-2);
+  height: auto; min-height: 30px; padding: var(--sp-1) var(--sp-2); text-align: left; font-size: var(--fs-2);
+}
+.pop.adjlist > button.arow:hover { background: var(--sel); }
+.pop.adjlist .arow .ix { font-size: var(--fs-1); color: var(--fg4); text-align: right; }
+.pop.adjlist .arow .geo { font-size: var(--fs-1); color: var(--fg3); white-space: nowrap; }
+.pop.adjlist .arow .why { grid-column: 2 / -1; font-size: var(--fs-1); color: var(--fg4); }
+.pop.adjlist .afoot { padding: var(--sp-1) var(--sp-2) 0; border-top: 1px solid var(--line1); }

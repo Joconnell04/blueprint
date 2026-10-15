@@ -1,0 +1,297 @@
+{
+  "plain_financial.xlsx": {
+    "blocks": [
+      {
+        "sheet": "Model",
+        "type": "inputs",
+        "row": 1,
+        "col": 1,
+        "rows": 8,
+        "cols": 2,
+        "min_conf": 0.7
+      },
+      {
+        "sheet": "Model",
+        "type": "calc",
+        "row": 10,
+        "col": 1,
+        "rows": 20,
+        "cols": 7,
+        "min_conf": 0.75,
+        "subtotals": 2,
+        "has_total": true
+      }
+    ],
+    "unclassified": 0
+  },
+  "data_dump.xlsx": {
+    "blocks": [
+      {
+        "sheet": "Data",
+        "type": "table",
+        "row": 1,
+        "col": 1,
+        "rows": 3000,
+        "cols": 14,
+        "min_conf": 0.6,
+        "max_conf": 0.8,
+        "dataRows": 2999,
+        "hidden_cols": 1,
+        "sample_len": 200
+      }
+    ],
+    "unclassified": 0
+  },
+  "side_by_side.xlsx": {
+    "blocks": [
+      {
+        "sheet": "Flow",
+        "type": "inputs",
+        "row": 2,
+        "col": 2,
+        "rows": 7,
+        "cols": 2,
+        "min_conf": 0.7,
+        "note": "Refresh quarterly"
+      },
+      {
+        "sheet": "Flow",
+        "type": "table",
+        "row": 2,
+        "col": 6,
+        "rows": 9,
+        "cols": 5,
+        "min_conf": 0.7,
+        "note": "Source: CRM"
+      },
+      {
+        "sheet": "Flow",
+        "type": "output",
+        "row": 2,
+        "col": 13,
+        "rows": 5,
+        "cols": 2,
+        "min_conf": 0.7
+      },
+      {
+        "sheet": "Flow",
+        "type": "inputs",
+        "row": 13,
+        "col": 2,
+        "rows": 7,
+        "cols": 2,
+        "min_conf": 0.7,
+        "note": "Refresh quarterly"
+      },
+      {
+        "sheet": "Flow",
+        "type": "table",
+        "row": 13,
+        "col": 6,
+        "rows": 9,
+        "cols": 5,
+        "min_conf": 0.7,
+        "note": "Source: CRM"
+      },
+      {
+        "sheet": "Flow",
+        "type": "output",
+        "row": 13,
+        "col": 13,
+        "rows": 5,
+        "cols": 2,
+        "min_conf": 0.7
+      }
+    ],
+    "unclassified": 0
+  },
+  "chart_heavy.xlsx": {
+    "blocks": [
+      {
+        "sheet": "Data",
+        "type": "table",
+        "row": 2,
+        "col": 2,
+        "rows": 7,
+        "cols": 5,
+        "min_conf": 0.7
+      },
+      {
+        "sheet": "Charts",
+        "type": "table",
+        "row": 2,
+        "col": 2,
+        "rows": 7,
+        "cols": 4,
+        "min_conf": 0.7
+      },
+      {
+        "sheet": "Charts",
+        "type": "chart",
+        "row": 2,
+        "col": 7,
+        "rows": 15,
+        "cols": 5,
+        "min_conf": 0.9,
+        "chart_kind": "bar",
+        "source_type": "table"
+      },
+      {
+        "sheet": "Charts",
+        "type": "chart",
+        "row": 20,
+        "col": 7,
+        "rows": 15,
+        "cols": 5,
+        "min_conf": 0.9,
+        "chart_kind": "line",
+        "series_cols": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "sheet": "Charts",
+        "type": "chart",
+        "row": 38,
+        "col": 7,
+        "rows": 15,
+        "cols": 5,
+        "min_conf": 0.9,
+        "chart_kind": "pie"
+      },
+      {
+        "sheet": "Charts",
+        "type": "chart",
+        "row": 56,
+        "col": 7,
+        "rows": 15,
+        "cols": 5,
+        "min_conf": 0.9,
+        "chart_kind": "bar"
+      },
+      {
+        "sheet": "Charts",
+        "type": "chart",
+        "row": 74,
+        "col": 7,
+        "rows": 15,
+        "cols": 5,
+        "min_conf": 0.7,
+        "max_conf": 0.7,
+        "chart_kind": "bar",
+        "source_sheet": "Data"
+      }
+    ],
+    "unclassified": 0
+  },
+  "messy.xlsx": {
+    "blocks": [
+      {
+        "sheet": "Messy",
+        "type": "table",
+        "row": 4,
+        "col": 2,
+        "rows": 7,
+        "cols": 4,
+        "min_conf": 0.5
+      },
+      {
+        "sheet": "Messy",
+        "type": "inputs",
+        "row": 2,
+        "col": 7,
+        "rows": 6,
+        "cols": 2,
+        "min_conf": 0.5,
+        "labels": "right"
+      },
+      {
+        "sheet": "Messy",
+        "type": "table",
+        "row": 13,
+        "col": 2,
+        "rows": 12,
+        "cols": 4,
+        "min_conf": 0.5,
+        "max_conf": 0.75,
+        "bridged": true,
+        "has_total": true
+      },
+      {
+        "sheet": "Messy",
+        "type": "table",
+        "row": 27,
+        "col": 2,
+        "rows": 7,
+        "cols": 4,
+        "min_conf": 0.6,
+        "has_total": true
+      },
+      {
+        "sheet": "Messy",
+        "type": "table",
+        "row": 34,
+        "col": 2,
+        "rows": 6,
+        "cols": 4,
+        "min_conf": 0.6
+      },
+      {
+        "sheet": "Messy",
+        "type": "table",
+        "row": 42,
+        "col": 2,
+        "rows": 7,
+        "cols": 4,
+        "min_conf": 0.5,
+        "header_rows": 2
+      }
+    ],
+    "unclassified": 3
+  },
+  "listobject.xlsx": {
+    "blocks": [
+      {
+        "sheet": "Sales",
+        "type": "table",
+        "row": 2,
+        "col": 2,
+        "rows": 8,
+        "cols": 5,
+        "min_conf": 0.9,
+        "has_total": true,
+        "listobject": true
+      },
+      {
+        "sheet": "Sales",
+        "type": "output",
+        "row": 12,
+        "col": 2,
+        "rows": 4,
+        "cols": 2,
+        "min_conf": 0.7
+      }
+    ],
+    "unclassified": 0
+  },
+  "hidden_frozen.xlsx": {
+    "blocks": [
+      {
+        "sheet": "Grouped",
+        "type": "table",
+        "row": 1,
+        "col": 2,
+        "rows": 14,
+        "cols": 7,
+        "min_conf": 0.5,
+        "max_conf": 0.65,
+        "header_rows": 2,
+        "hidden_rows": 3,
+        "hidden_cols": 1
+      }
+    ],
+    "unclassified": 0
+  }
+}

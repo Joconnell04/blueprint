@@ -1,0 +1,157 @@
+/*
+ * Design tokens. Every colour, size, radius, shadow, z-index and duration in the canvas comes from here.
+ * Dark first; :root[data-theme="light"] overrides only what changes. Nothing else in src/app may hold a
+ * literal colour, duration or font size. See docs/design-system.md.
+ */
+:root {
+  color-scheme: dark;
+
+  /* surfaces, back to front */
+  --bg0: #0e0e10;
+  --bg1: #131315;
+  --bg2: #17171a;
+  --bg3: #1f1f23;
+  --bg4: #26262b;
+  --hover: rgba(255, 255, 255, 0.05);
+  --sel: rgba(255, 255, 255, 0.08);
+
+  /* hairlines, faint to strong */
+  --line1: rgba(255, 255, 255, 0.08);
+  --line2: rgba(255, 255, 255, 0.12);
+  --line3: rgba(255, 255, 255, 0.18);
+
+  /* ink, strong to faint */
+  --fg1: #ededef;
+  --fg2: #a8a8b0;
+  --fg3: #8b8b93;
+  --fg4: #6b6b73;
+  --fg5: #4a4a52;
+
+  /* one accent, three states */
+  --accent: #4d8dff;
+  --accent-soft: rgba(77, 141, 255, 0.18);
+  --accent-ink: #9dbcff;
+  --ok: #3ecf8e;
+  --ok-soft: rgba(62, 207, 142, 0.14);
+  --warn: #f5a524;
+  --warn-soft: rgba(245, 165, 36, 0.14);
+  --bad: #f26e70;
+  --bad-soft: rgba(242, 110, 112, 0.14);
+  --bad-line: rgba(242, 110, 112, 0.35);
+  --chart: #e8735f;          /* chart sketches and chart placeholders */
+  --chart-soft: rgba(232, 115, 95, 0.06);
+  --value: #9dbcff;          /* a number the user supplies */
+  --link: #5aa9f5;           /* a cell that only passes another sheet's value through */
+
+  /* filled button */
+  --btn-bg: #ededef;
+  --btn-fg: #0e0e10;
+
+  /* type */
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  --fs-tag: 9px;    /* canvas micro type: block type tags, arrow labels */
+  --fs-micro: 10px; /* canvas micro type: cell text in a block or a built sheet */
+  --fs-1: 11px;
+  --fs-2: 12px;
+  --fs-3: 13px;
+  --fs-4: 15px;
+  --fs-5: 18px;
+  --lh-1: 1.3;
+  --lh-2: 1.45;
+  --ls-caps: 0.05em;
+
+  /* spacing, 4-pt scale */
+  --sp-0: 2px;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+
+  /* control heights */
+  --h-ctl: 28px;
+  --h-ctl-sm: 24px;
+  --h-row: 28px;
+  --h-hdr: 46px;
+  --h-ftr: 48px;
+  --h-bar: 36px;
+  --h-strip: 38px;
+
+  /* radii */
+  --r-sm: 5px;
+  --r: 7px;
+  --r-lg: 10px;
+
+  /* elevation: one for a lifted surface, one for a floating one */
+  --e1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --e2: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+  /* z ladder */
+  --z-canvas: 1;
+  --z-block: 5;
+  --z-drag: 6;
+  --z-marquee: 7;
+  --z-rowhdr: 11;
+  --z-colhdr: 12;
+  --z-corner: 13;
+  --z-float: 20;
+  --z-pop: 30;
+  --z-toast: 40;
+
+  /* motion */
+  --dur-0: 1ms;   /* reduced motion: effectively off */
+  --dur-1: 120ms;
+  --dur-2: 180ms;
+  --dur-3: 220ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  /*
+   * Light keeps dark's ordering and only reverses its direction: bg0 is the page and every step after it
+   * is whiter, so "further forward" still means "further from the page". bg4 is the one deliberate flip:
+   * white has nothing above it, so the active/pressed tone (button hover, segmented on, a block's header)
+   * goes the other way instead. The old ramp had bg1 = bg3 and bg0 ≈ bg2, which left a button invisible on
+   * the panel, a card invisible on a slide and the built sheet with no body on the canvas (DS5).
+   */
+  --bg0: #eaeaed;
+  --bg1: #f0f0f2;
+  --bg2: #f6f6f8;
+  --bg3: #ffffff;
+  --bg4: #e2e2e7;
+  /* washes and hairlines are alpha, so light needs more of it than dark to land on the same ratio */
+  --hover: rgba(0, 0, 0, 0.06);
+  --sel: rgba(0, 0, 0, 0.10);
+  --line1: rgba(0, 0, 0, 0.10);
+  --line2: rgba(0, 0, 0, 0.16);
+  --line3: rgba(0, 0, 0, 0.26);
+  --fg1: #151517;
+  --fg2: #46464d;
+  --fg3: #5c5c64;
+  --fg4: #6d6d76;         /* 11 px labels, keycaps and grid headers: 4.3:1 on the page, 5.1:1 on white */
+  --fg5: #94949c;
+  --accent: #2563c9;
+  --accent-soft: rgba(37, 99, 201, 0.12);
+  --accent-ink: #1e4fa3;
+  /* each semantic reads at 4.5:1 or better on its own -soft fill, which a chip needs at 11 px */
+  --ok: #0f6f4b;
+  --ok-soft: rgba(15, 111, 75, 0.12);
+  --warn: #8a5200;
+  --warn-soft: rgba(138, 82, 0, 0.12);
+  --bad: #b52b30;
+  --bad-soft: rgba(181, 43, 48, 0.1);
+  --bad-line: rgba(181, 43, 48, 0.32);
+  --chart: #b8422b;
+  --chart-soft: rgba(184, 66, 43, 0.05);
+  --value: #1e4fa3;
+  --link: #0f5fb0;
+  --btn-bg: #151517;
+  --btn-fg: #ffffff;
+  --e1: 0 1px 2px rgba(0, 0, 0, 0.12);
+  --e2: 0 8px 24px rgba(0, 0, 0, 0.18);
+}

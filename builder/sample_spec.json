@@ -1,0 +1,618 @@
+{
+  "outputPath": "builder/sample_house.xlsx",
+  "formatting": "house",
+  "project": {
+    "name": "Fieldnote: US SMB market sizing",
+    "brief": "Size the US small business market for Fieldnote seats, then ramp revenue over five years off a single penetration assumption."
+  },
+  "readme": {
+    "purpose": "This workbook sizes the US small and mid sized business market for Fieldnote seats and ramps revenue over five years. The TAM is built bottom up from account counts, seats per account and a discounted price per seat. The ramp takes one penetration assumption in year one and compounds it, so every output moves off a handful of blue cells on the Assumptions tab.",
+    "contents": [
+      {
+        "tab": "Assumptions",
+        "holds": "Every input the model reads: market frame, pricing, ramp and retention."
+      },
+      {
+        "tab": "TAM Build",
+        "holds": "Bottom up TAM by segment, with the segment chart."
+      },
+      {
+        "tab": "Revenue Ramp",
+        "holds": "Five year ramp, headline outputs and the revenue chart."
+      },
+      {
+        "tab": "Sources & Appendix",
+        "holds": "Where each input came from, method notes and open items."
+      }
+    ],
+    "rules": [
+      "Blue cells are inputs. Change these and nothing else.",
+      "Black cells are formulas. Do not type over them.",
+      "Grey italic text is a note or a source, never a number the model reads.",
+      "Every figure on Assumptions traces to a row on Sources & Appendix.",
+      "Anything still reading TBD is unresolved and should not be quoted outside the team."
+    ],
+    "answer": "Fieldnote's serviceable seat market is about $1.9B, and the five year ramp reaches $124M of revenue at a 1.0% share of SAM in 2030."
+  },
+  "sheets": [
+    {
+      "name": "Read Me",
+      "blocks": []
+    },
+    {
+      "name": "Assumptions",
+      "blocks": [
+        {
+          "id": "b_scope",
+          "type": "text",
+          "title": "Scope and approach",
+          "row": 2,
+          "col": 2,
+          "cols": 5,
+          "text": "The model covers US firms with 5 to 200 employees plus state and local public sector buyers. It prices on seats, not sites, and treats the discount as blended across segments rather than per deal. Everything downstream reads from the blue cells below."
+        },
+        {
+          "id": "b_market",
+          "type": "inputs",
+          "title": "Market frame",
+          "note": "Refresh when the SBA profile updates",
+          "row": 5,
+          "col": 2,
+          "cols": 4,
+          "rows": [
+            {
+              "label": "Base year",
+              "value": 2026,
+              "format": "year",
+              "note": "The model starts here"
+            },
+            {
+              "label": "US small businesses (M)",
+              "value": 33.2,
+              "format": "number",
+              "note": "SBA 2024 small business profile"
+            },
+            {
+              "label": "Serviceable share",
+              "value": 0.42,
+              "format": "percent",
+              "note": "Firms with 5 to 200 employees"
+            },
+            {
+              "label": "Target segments",
+              "value": 3,
+              "format": "count"
+            }
+          ]
+        },
+        {
+          "id": "b_pricing",
+          "type": "inputs",
+          "title": "Pricing",
+          "row": 11,
+          "col": 2,
+          "cols": 4,
+          "rows": [
+            {
+              "label": "List price per seat",
+              "value": 480,
+              "format": "currency",
+              "note": "Annual list, published rate card"
+            },
+            {
+              "label": "Average discount",
+              "value": 0.15,
+              "format": "percent",
+              "note": "Blended across the three segments"
+            },
+            {
+              "label": "Avg price",
+              "value": {
+                "f": "={{b_pricing!List price per seat}}*(1-{{b_pricing!Average discount}})"
+              },
+              "format": "currency",
+              "note": "Net price the ramp uses"
+            },
+            {
+              "label": "Blended seats per account",
+              "value": 12,
+              "format": "count",
+              "note": "Weighted by the segment mix in TAM Build"
+            }
+          ]
+        },
+        {
+          "id": "b_ramp_assum",
+          "type": "inputs",
+          "title": "Ramp and retention",
+          "row": 17,
+          "col": 2,
+          "cols": 4,
+          "rows": [
+            {
+              "label": "Year 1 penetration",
+              "value": 0.004,
+              "format": "percent",
+              "note": "Share of total accounts won in year one"
+            },
+            {
+              "label": "Penetration growth",
+              "value": 0.45,
+              "format": "percent",
+              "note": "Applied to the prior year penetration"
+            },
+            {
+              "label": "Gross margin",
+              "value": 0.78,
+              "format": "percent",
+              "note": "Hosting and support only"
+            },
+            {
+              "label": "Annual churn",
+              "value": 0.11,
+              "format": "percent",
+              "note": "Logo churn, not seat churn"
+            },
+            {
+              "label": "Net new logos, year 1",
+              "value": "TBD",
+              "format": "text",
+              "note": "Sales has not signed off yet"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TAM Build",
+      "blocks": [
+        {
+          "id": "b_tam_intro",
+          "type": "text",
+          "title": "How the TAM is built",
+          "row": 2,
+          "col": 2,
+          "cols": 6,
+          "text": "Accounts by segment come from the licensed firmographic file, seats per account from the 2025 install base, and price per seat from Assumptions. TAM is accounts times seats times net price, so a change to the discount moves every row at once."
+        },
+        {
+          "id": "b_tam",
+          "type": "table",
+          "title": "Bottom up TAM by segment",
+          "note": "Accounts from the licensed firmographic file",
+          "row": 5,
+          "col": 2,
+          "cols": 5,
+          "columns": [
+            "Segment",
+            "Accounts (K)",
+            "Seats per account",
+            "Price per seat",
+            "TAM ($M)"
+          ],
+          "colFormats": [
+            "text",
+            "count",
+            "count",
+            "currency",
+            "currency"
+          ],
+          "data": [
+            [
+              "Micro, 5 to 19 staff",
+              4100,
+              6,
+              {
+                "f": "={{b_pricing!Avg price}}"
+              },
+              {
+                "f": "={{b_tam!0,1}}*1000*{{b_tam!0,2}}*{{b_tam!0,3}}/1000000"
+              }
+            ],
+            [
+              "Small, 20 to 99 staff",
+              1450,
+              18,
+              {
+                "f": "={{b_pricing!Avg price}}"
+              },
+              {
+                "f": "={{b_tam!1,1}}*1000*{{b_tam!1,2}}*{{b_tam!1,3}}/1000000"
+              }
+            ],
+            [
+              "Mid, 100 to 200 staff",
+              310,
+              65,
+              {
+                "f": "={{b_pricing!Avg price}}"
+              },
+              {
+                "f": "={{b_tam!2,1}}*1000*{{b_tam!2,2}}*{{b_tam!2,3}}/1000000"
+              }
+            ],
+            [
+              "Public sector",
+              95,
+              40,
+              {
+                "f": "={{b_pricing!Avg price}}*0.85"
+              },
+              {
+                "f": "={{b_tam!3,1}}*1000*{{b_tam!3,2}}*{{b_tam!3,3}}/1000000"
+              }
+            ]
+          ],
+          "totalRow": [
+            "Total",
+            {
+              "f": "=SUM({{b_tam!col:1}})"
+            },
+            null,
+            null,
+            {
+              "f": "=SUM({{b_tam!col:4}})"
+            }
+          ]
+        },
+        {
+          "id": "b_tam_chart",
+          "type": "chart",
+          "title": "TAM by segment",
+          "row": 13,
+          "col": 2,
+          "cols": 5,
+          "rows": 15,
+          "chart": {
+            "kind": "bar",
+            "sourceBlock": "b_tam",
+            "categoriesCol": 0,
+            "seriesCols": [
+              4
+            ],
+            "yTitle": "USD M"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Revenue Ramp",
+      "blocks": [
+        {
+          "id": "b_ramp",
+          "type": "calc",
+          "title": "Five year revenue ramp",
+          "note": "Penetration compounds off year one",
+          "row": 3,
+          "col": 2,
+          "cols": 6,
+          "columns": [
+            "Year",
+            "Penetration",
+            "Accounts",
+            "Seats",
+            "Revenue ($M)",
+            "Gross profit ($M)"
+          ],
+          "colFormats": [
+            "year",
+            "percent",
+            "count",
+            "count",
+            "currency",
+            "currency"
+          ],
+          "total": true,
+          "data": [
+            [
+              2026,
+              {
+                "f": "={{b_ramp_assum!Year 1 penetration}}"
+              },
+              {
+                "f": "={{b_tam!total:1}}*1000*{{b_ramp!0,1}}"
+              },
+              {
+                "f": "={{b_ramp!0,2}}*{{b_pricing!Blended seats per account}}"
+              },
+              {
+                "f": "={{b_ramp!0,3}}*{{b_pricing!Avg price}}/1000000"
+              },
+              {
+                "f": "={{b_ramp!0,4}}*{{b_ramp_assum!Gross margin}}"
+              }
+            ],
+            [
+              2027,
+              {
+                "f": "={{b_ramp!0,1}}*(1+{{b_ramp_assum!Penetration growth}})"
+              },
+              {
+                "f": "={{b_tam!total:1}}*1000*{{b_ramp!1,1}}"
+              },
+              {
+                "f": "={{b_ramp!1,2}}*{{b_pricing!Blended seats per account}}"
+              },
+              {
+                "f": "={{b_ramp!1,3}}*{{b_pricing!Avg price}}/1000000"
+              },
+              {
+                "f": "={{b_ramp!1,4}}*{{b_ramp_assum!Gross margin}}"
+              }
+            ],
+            [
+              2028,
+              {
+                "f": "={{b_ramp!1,1}}*(1+{{b_ramp_assum!Penetration growth}})"
+              },
+              {
+                "f": "={{b_tam!total:1}}*1000*{{b_ramp!2,1}}"
+              },
+              {
+                "f": "={{b_ramp!2,2}}*{{b_pricing!Blended seats per account}}"
+              },
+              {
+                "f": "={{b_ramp!2,3}}*{{b_pricing!Avg price}}/1000000"
+              },
+              {
+                "f": "={{b_ramp!2,4}}*{{b_ramp_assum!Gross margin}}"
+              }
+            ],
+            [
+              2029,
+              {
+                "f": "={{b_ramp!2,1}}*(1+{{b_ramp_assum!Penetration growth}})"
+              },
+              {
+                "f": "={{b_tam!total:1}}*1000*{{b_ramp!3,1}}"
+              },
+              {
+                "f": "={{b_ramp!3,2}}*{{b_pricing!Blended seats per account}}"
+              },
+              {
+                "f": "={{b_ramp!3,3}}*{{b_pricing!Avg price}}/1000000"
+              },
+              {
+                "f": "={{b_ramp!3,4}}*{{b_ramp_assum!Gross margin}}"
+              }
+            ],
+            [
+              2030,
+              {
+                "f": "={{b_ramp!3,1}}*(1+{{b_ramp_assum!Penetration growth}})"
+              },
+              {
+                "f": "={{b_tam!total:1}}*1000*{{b_ramp!4,1}}"
+              },
+              {
+                "f": "={{b_ramp!4,2}}*{{b_pricing!Blended seats per account}}"
+              },
+              {
+                "f": "={{b_ramp!4,3}}*{{b_pricing!Avg price}}/1000000"
+              },
+              {
+                "f": "={{b_ramp!4,4}}*{{b_ramp_assum!Gross margin}}"
+              }
+            ]
+          ]
+        },
+        {
+          "id": "b_share",
+          "type": "table",
+          "title": "Share of SAM by year",
+          "note": "Management assumption; the listed comparable is about 13% of 2026 SAM",
+          "row": 12,
+          "col": 2,
+          "cols": 6,
+          "columns": [
+            "Line",
+            "2026",
+            "2027",
+            "2028",
+            "2029",
+            "2030"
+          ],
+          "colFormats": [
+            "text",
+            "percent",
+            "percent",
+            "percent",
+            "percent",
+            "percent"
+          ],
+          "rowFormats": [
+            "percent",
+            "count",
+            "currency"
+          ],
+          "data": [
+            [
+              "Share of SAM volume",
+              0.001,
+              0.003,
+              0.005,
+              0.008,
+              0.01
+            ],
+            [
+              "Accounts added",
+              40,
+              120,
+              200,
+              320,
+              400
+            ],
+            [
+              "Price per seat",
+              39,
+              40,
+              41,
+              42,
+              43
+            ]
+          ]
+        },
+        {
+          "id": "b_out",
+          "type": "output",
+          "title": "Headline outputs",
+          "row": 18,
+          "col": 2,
+          "cols": 4,
+          "rows": [
+            {
+              "label": "Year 5 revenue ($M)",
+              "value": {
+                "f": "={{b_ramp!4,4}}"
+              },
+              "format": "currency",
+              "note": "Before any churn adjustment"
+            },
+            {
+              "label": "Year 5 gross profit ($M)",
+              "value": {
+                "f": "={{b_ramp!4,5}}"
+              },
+              "format": "currency"
+            },
+            {
+              "label": "Share of TAM captured",
+              "value": {
+                "f": "={{b_ramp!4,4}}/{{b_tam!total:4}}"
+              },
+              "format": "percent",
+              "note": "Sanity check: under one percent is normal"
+            },
+            {
+              "label": "Revenue CAGR, year 1 to year 5",
+              "value": {
+                "f": "=({{b_ramp!4,4}}/{{b_ramp!0,4}})^(1/4)-1"
+              },
+              "format": "percent"
+            }
+          ]
+        },
+        {
+          "id": "b_ramp_chart",
+          "type": "chart",
+          "title": "Revenue and gross profit by year",
+          "row": 24,
+          "col": 2,
+          "cols": 6,
+          "rows": 16,
+          "chart": {
+            "kind": "line",
+            "sourceBlock": "b_ramp",
+            "categoriesCol": 0,
+            "seriesCols": [
+              4,
+              5
+            ],
+            "yTitle": "USD M"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sources & Appendix",
+      "blocks": [
+        {
+          "id": "b_src",
+          "type": "table",
+          "title": "Sources",
+          "note": "Every figure on Assumptions traces to a row here",
+          "row": 3,
+          "col": 2,
+          "cols": 5,
+          "columns": [
+            "Input",
+            "Source",
+            "Published",
+            "Detail",
+            "Link"
+          ],
+          "colFormats": [
+            "text",
+            "text",
+            "year",
+            "text",
+            "text"
+          ],
+          "data": [
+            [
+              "US small businesses",
+              "SBA Office of Advocacy",
+              2024,
+              "Small business profile, firms with employees",
+              {
+                "v": "SBA profile",
+                "link": "https://advocacy.sba.gov/2024/07/23/frequently-asked-questions-about-small-business/"
+              }
+            ],
+            [
+              "Serviceable share",
+              "Census County Business Patterns",
+              2023,
+              "Employment size class 5 to 199",
+              {
+                "v": "Census CBP",
+                "link": "https://www.census.gov/programs-surveys/cbp.html"
+              }
+            ],
+            [
+              "Seats per account",
+              "Fieldnote install base",
+              2025,
+              "Median seats on paid plans",
+              "Internal"
+            ],
+            [
+              "Average discount",
+              "Fieldnote CRM",
+              2025,
+              "Closed won deals, trailing four quarters",
+              "Internal"
+            ]
+          ]
+        },
+        {
+          "id": "b_method",
+          "type": "text",
+          "title": "Method notes",
+          "row": 10,
+          "col": 2,
+          "cols": 6,
+          "text": "Accounts are counted at the firm level, not the establishment level, so multi site firms appear once. Public sector accounts sit outside the SBA universe and were added from the state and local procurement file. Nothing here is recalculated in Excel by the builder, so open the file once and let Excel compute."
+        },
+        {
+          "id": "b_open",
+          "type": "inputs",
+          "title": "Open items",
+          "row": 13,
+          "col": 2,
+          "cols": 4,
+          "rows": [
+            {
+              "label": "Net new logos, year 1",
+              "value": "TBD",
+              "format": "text",
+              "note": "Sales to confirm the quota plan"
+            },
+            {
+              "label": "Seat expansion rate",
+              "value": "TBD",
+              "format": "text",
+              "note": "Not yet modelled, would lift years 3 to 5"
+            },
+            {
+              "label": "International scope",
+              "value": "TBD",
+              "format": "text",
+              "note": "Out of scope for this version"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

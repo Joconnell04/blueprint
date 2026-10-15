@@ -1,0 +1,84 @@
+/*
+ * The style popover: the picker, filtered to the styles that can dress this project's kind, the
+ * "Output" row that keeps Folder and File name folded away, "New style", which runs extract_format
+ * over example files and previews what came back, and one footer under all of it, so the sheet only
+ * ever shows one primary action.
+ * Imported by styles.css. `.stylefmt` scopes every rule here to this popover, because `.stylepop`
+ * alone also dresses the templates sheet. Values come from tokens.css; nothing here is a literal
+ * colour, duration or font size. See docs/design-system.md.
+ */
+
+/* a long preview scrolls inside the sheet rather than growing the sheet past the canvas */
+.stylefmt { display: flex; flex-direction: column; max-height: min(520px, 78vh); overflow: hidden; }
+.stylebody { display: flex; flex-direction: column; gap: var(--sp-2); min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+/* one gutter for the whole sheet, so the labels, the rows and the fields all start on the same line */
+.stylebody > .field,
+.stylebody > .split,
+.stylebody > .inline { padding: 0 var(--sp-2); }
+
+/* ---- picker: one line per style, its action on the right ---- */
+.srow { display: flex; align-items: center; gap: var(--sp-1); }
+.srow > .styleopt { flex: 1; min-width: 0; }
+.srow > .derive { flex: none; margin-right: var(--sp-1); }
+.stylefmt .styleopt { align-items: center; }
+.stylefmt .styleopt .sname,
+.stylefmt .styleopt .sdesc { display: flex; align-items: center; gap: var(--sp-1); min-width: 0; white-space: nowrap; }
+.stylefmt .styleopt .sdesc .chip { margin: 0; vertical-align: baseline; }
+.strunc { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.chip.tokmiss { color: var(--fg4); }
+
+/*
+ * ---- output: one ghost row, the file name on it, the two fields under it ----
+ * Collapsed, the row reads as a line of the picker rather than a control; open, the chevron turns and
+ * the File name field says what the row was saying, so the row drops it.
+ */
+.stylefmt .outrow { width: 100%; height: var(--h-ctl-sm); justify-content: flex-start; gap: var(--sp-2); border-radius: var(--r-sm); }
+.stylefmt .outrow .onow { color: var(--fg3); }
+.stylefmt .outrow svg { margin-left: auto; color: var(--fg4); transition: transform var(--dur-1) var(--ease-out); }
+.stylefmt .outrow.open svg { transform: rotate(180deg); }
+.stylefmt .outrow.open .onow { display: none; }
+.stylefmt .outf { padding-bottom: var(--sp-1); }
+
+/*
+ * ---- what the builder may change (deck only) ----
+ * Under Folder and File name: the fidelity as one segmented control with a single line under it, then the
+ * three extras as pressed buttons. A workbook never shows this row.
+ */
+.stylefmt .buildf { display: flex; flex-direction: column; gap: var(--sp-2); padding: 0 var(--sp-2) var(--sp-2); }
+.stylefmt .buildf .fidseg { flex: none; }
+.stylefmt .buildf .fidline { margin-top: calc(-1 * var(--sp-1)); }
+.stylefmt .buildf .bopts { row-gap: var(--sp-1); }
+.stylefmt .buildf .bopt { color: var(--fg3); border-color: var(--line2); background: var(--bg2); }
+.stylefmt .buildf .bopt:hover { color: var(--fg1); background: var(--bg4); }
+.stylefmt .buildf .bopt.on { background: var(--sel); color: var(--fg1); border-color: var(--line3); }
+.stylefmt .buildf .bopt svg { color: var(--accent); }
+
+/* ---- new style from example files ---- */
+.stylenew { display: flex; flex-direction: column; gap: var(--sp-2); padding: var(--sp-1) var(--sp-2) var(--sp-2); }
+.stylenew .split .kindf { flex: none; }
+.stylenew .kindf .seg { align-self: flex-start; }
+.dropz { display: flex; flex-direction: column; gap: var(--sp-0); padding: var(--sp-1); background: var(--bg2); border: 1px dashed var(--line2); border-radius: var(--r-sm); }
+.dropz:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.dropz.over { border-color: var(--accent); background: var(--accent-soft); }
+.dropz textarea { min-height: 40px; padding: 0 var(--sp-1); background: transparent; border-color: transparent; font-family: var(--mono); font-size: var(--fs-2); }
+.dropz textarea:focus { border-color: transparent; box-shadow: none; }
+.drophint { padding: 0 var(--sp-1); }
+
+/* ---- preview: a line per recovered field, then what only Claude can answer ---- */
+.xerr { margin: 0; border-color: var(--bad-line); }
+.xerr .ct { color: var(--bad); }
+.xprev { display: flex; flex-direction: column; gap: 1px; }
+.xprev > .pophdr { padding-left: 0; padding-right: 0; }
+.xsec { display: flex; align-items: center; gap: var(--sp-2); height: var(--h-ctl-sm); }
+.xrow { display: grid; grid-template-columns: 6px 1fr auto; gap: var(--sp-2); align-items: center; height: 20px; font-size: var(--fs-2); }
+.xrow .xk { color: var(--fg3); }
+.xrow .xv { max-width: 200px; text-align: right; }
+.xmore { padding-left: var(--sp-4); }
+.xask li { font-size: var(--fs-2); line-height: var(--lh-1); }
+.xacts { padding-top: var(--sp-1); }
+
+/*
+ * The one footer. It sits outside the scrolling body, so the primary action is always in view and
+ * never covers a row the way a sticky footer would.
+ */
+.stylefmt > .inline.popfoot { padding: var(--sp-2); border-top: 1px solid var(--line1); }

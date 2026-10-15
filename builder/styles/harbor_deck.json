@@ -1,0 +1,330 @@
+{
+  "name": "Harbor",
+  "note": "A sample skill format: navy palette, Lato (Arial fallback), pipe kicker, 2.25 pt 1E3A5F roundRect cards, teal dividers, navy title slide, slate agenda, page number top-right.",
+  "palette": {
+    "bg": "FFFFFF",
+    "ink": "1F2937",
+    "muted": "666666",
+    "accent": "1E3A5F",
+    "accent2": "2A9D8F",
+    "line": "E3EEF2",
+    "cardFill": "FFFFFF",
+    "cardBorder": "1E3A5F",
+    "takeawayFill": "E3EEF2",
+    "inverse": "FFFFFF",
+    "series": [
+      "1E3A5F",
+      "2A9D8F",
+      "E9C46A",
+      "6B7280",
+      "E3EEF2",
+      "264653"
+    ]
+  },
+  "fonts": {
+    "display": "Lato",
+    "body": "Lato",
+    "mono": "Lato",
+    "fallback": "Arial"
+  },
+  "card": {
+    "shape": "roundRect",
+    "radiusAdj": 8000,
+    "borderPt": 2.25,
+    "borderColor": "accent",
+    "fill": "cardFill",
+    "insetPt": 14,
+    "gutterPt": 27
+  },
+  "table": {
+    "headerFill": "E3EEF2",
+    "ruleColor": "9FB8C8",
+    "rowHeightPt": 22,
+    "labelColumn": {
+      "case": "none",
+      "color": "ink",
+      "bold": true
+    }
+  },
+  "chart": {
+    "legend": "bottom",
+    "gridlines": true
+  },
+  "diagrams": "placeholder",
+  "kicker": {
+    "pattern": "{section} | {topic}",
+    "case": "title"
+  },
+  "divider": {
+    "numbered": false
+  },
+  "typeScale": {
+    "kicker": {
+      "size": 16,
+      "min": 13,
+      "max": 18,
+      "maxLines": 1,
+      "color": "ink"
+    },
+    "headline": {
+      "size": 28,
+      "min": 24,
+      "max": 32,
+      "maxLines": 2,
+      "color": "ink",
+      "bold": true
+    },
+    "coverTitle": {
+      "size": 33,
+      "min": 28,
+      "max": 40,
+      "maxLines": 2,
+      "color": "ink"
+    },
+    "coverSubtitle": {
+      "size": 16,
+      "min": 13,
+      "max": 20,
+      "color": "muted"
+    },
+    "coverDate": {
+      "size": 13,
+      "min": 11,
+      "max": 15,
+      "color": "muted"
+    },
+    "wordmark": {
+      "size": 26,
+      "min": 16,
+      "max": 34,
+      "color": "accent2"
+    },
+    "dividerTitle": {
+      "size": 68,
+      "min": 54,
+      "max": 72,
+      "maxLines": 2,
+      "color": "ink"
+    },
+    "dividerSubtitle": {
+      "size": 21,
+      "min": 16,
+      "max": 24,
+      "color": "ink"
+    },
+    "agendaEyebrow": {
+      "size": 13,
+      "min": 11,
+      "max": 14,
+      "caps": true,
+      "color": "ink"
+    },
+    "agendaStatement": {
+      "size": 40,
+      "min": 32,
+      "max": 40,
+      "color": "accent"
+    },
+    "cardHeader": {
+      "size": 17,
+      "min": 15,
+      "max": 18,
+      "color": "accent"
+    },
+    "cardSub": {
+      "size": 14,
+      "min": 12,
+      "max": 14,
+      "color": "accent2"
+    },
+    "cardBody": {
+      "size": 12,
+      "min": 11,
+      "max": 14,
+      "color": "muted"
+    },
+    "body": {
+      "size": 12,
+      "min": 11,
+      "max": 14,
+      "color": "muted"
+    },
+    "bullets": {
+      "size": 14,
+      "min": 12,
+      "max": 16,
+      "color": "muted"
+    },
+    "statValue": {
+      "size": 44,
+      "min": 32,
+      "max": 54,
+      "color": "accent"
+    },
+    "statLabel": {
+      "size": 12,
+      "min": 11,
+      "max": 13,
+      "color": "muted"
+    },
+    "quote": {
+      "size": 24,
+      "min": 20,
+      "max": 28,
+      "color": "ink"
+    },
+    "takeaway": {
+      "size": 13,
+      "min": 11,
+      "max": 16,
+      "color": "ink"
+    },
+    "caption": {
+      "size": 8,
+      "min": 8,
+      "max": 10,
+      "color": "muted"
+    },
+    "pageNumber": {
+      "size": 8,
+      "min": 8,
+      "max": 10,
+      "color": "muted"
+    },
+    "placeholder": {
+      "size": 16,
+      "min": 11,
+      "max": 16,
+      "italic": true,
+      "color": "accent"
+    }
+  },
+  "furniture": {
+    "kicker": {
+      "x": 32,
+      "y": 73,
+      "w": 600,
+      "h": 26
+    },
+    "headline": {
+      "x": 32,
+      "y": 108,
+      "w": 868,
+      "h": 80
+    },
+    "hairline": null,
+    "body": {
+      "x": 32,
+      "y": 197,
+      "w": 868,
+      "h": 253
+    },
+    "takeaway": {
+      "x": 32,
+      "y": 450,
+      "w": 868,
+      "h": 40
+    },
+    "source": {
+      "x": 32,
+      "y": 510,
+      "w": 500,
+      "h": 14
+    },
+    "pageNumber": {
+      "x": 872,
+      "y": 25,
+      "w": 56,
+      "h": 14,
+      "align": "right"
+    },
+    "dividerTitle": {
+      "x": 30,
+      "y": 81,
+      "w": 870,
+      "h": 160
+    },
+    "dividerSubtitle": {
+      "x": 30,
+      "y": 250,
+      "w": 800,
+      "h": 70
+    },
+    "coverWordmark": {
+      "x": 25,
+      "y": 60,
+      "w": 620,
+      "h": 40
+    },
+    "coverTitle": {
+      "x": 25,
+      "y": 330,
+      "w": 760,
+      "h": 90
+    },
+    "coverSubtitle": {
+      "x": 25,
+      "y": 424,
+      "w": 760,
+      "h": 26
+    },
+    "coverDate": {
+      "x": 25,
+      "y": 456,
+      "w": 400,
+      "h": 22
+    },
+    "agendaEyebrow": {
+      "x": 32,
+      "y": 60,
+      "w": 400,
+      "h": 20
+    },
+    "agendaStatement": {
+      "x": 32,
+      "y": 96,
+      "w": 800,
+      "h": 110
+    }
+  },
+  "backgrounds": {
+    "content": {
+      "fill": "FFFFFF"
+    },
+    "title": {
+      "fill": "1E3A5F",
+      "ink": "FFFFFF",
+      "muted": "E3EEF2",
+      "accent": "FFFFFF",
+      "accent2": "2A9D8F",
+      "line": "E3EEF2"
+    },
+    "divider": {
+      "fill": "2A9D8F",
+      "ink": "FFFFFF",
+      "muted": "FFFFFF",
+      "accent": "FFFFFF",
+      "accent2": "FFFFFF",
+      "line": "FFFFFF"
+    },
+    "agenda": {
+      "fill": "264653",
+      "ink": "FFFFFF",
+      "muted": "E3EEF2",
+      "accent": "2A9D8F",
+      "accent2": "FFFFFF",
+      "line": "E3EEF2"
+    }
+  },
+  "copy": {
+    "wordmark": "Harbor",
+    "agendaEyebrow": "TODAY",
+    "emptyText": "[Add content]"
+  },
+  "rules": {
+    "kicker": true,
+    "pageNumber": true,
+    "source": true,
+    "pageNumberOnTitle": false
+  }
+}
